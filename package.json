@@ -1,0 +1,14 @@
+{
+  "name": "x-filter-unreal-accounts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/EduardoJM/x-filter-unreal-accounts.git",
+  "author": "Eduardo Oliveira <eduardo_y05@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

@@ -6,17 +6,35 @@ const filterWithSequentialNumbers = (item) => {
 
 const filterPubli = (item) => {
   const links = Array.from(item.tweetElement.querySelectorAll('a'));
-  return !!links.find((item) => /^De(.*?).com(.*?)/.test(item.innerText));
+  const hasLinks = !!links.find((item) => {
+    if (!/^De(.*?).com(.*?)/.test(item.innerText)) {
+      return false;
+    }
+    return !item.getAttribute('href').startsWith('https://t.co/');
+  });
+
+  if (hasLinks) {
+    return true;
+  }
+
+  const spans = item.tweetElement.querySelectorAll('span');
+  
+  const spansText = !!Array.from(spans)
+    .map((item) => item.innerText)
+    .find((text) => text === 'Promovido');
+
+  return spansText;
 }
 
 const FILTERS = [filterWithSequentialNumbers, filterPubli];
 
 const isInvalidHandle = (tweet) => {
-  const failedFilters = FILTERS.filter((item) => {
-    return item(tweet);
-  });
-
-  return failedFilters.length > 0;
+  for(const filter of FILTERS) {
+    if (filter(tweet)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 const INTERVAL_TIME = 200;
@@ -53,7 +71,6 @@ const processFeed = () => {
       continue;
     }
 
-    console.log(item.innerElement);
     hideTweet(item.innerElement);
   }
 };

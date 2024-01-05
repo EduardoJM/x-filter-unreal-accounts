@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "X Accounts Filter",
+  "description": "Filter and hide posts from unreal accounts on X (Twitter)",
+  "version": "0.0.1",
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/filter.js"
+      ],
+      "matches": [
+        "https://twitter.com/*"
+      ]
+    }
+  ]
+}

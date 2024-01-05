@@ -1,7 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/scripts/filter.ts',
+  entry: {
+    'scripts/filter': './src/scripts/filter.ts',
+    'pages/options': './src/pages/options.ts',
+  },
   mode: 'production',
   module: {
     rules: [
@@ -16,7 +19,7 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   output: {
-    filename: 'filter.js',
-    path: path.resolve(__dirname, 'scripts'),
+    path: __dirname,
+    filename: '[name].js',
   },
 };

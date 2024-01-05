@@ -1,3 +1,5 @@
 node_modules
 scripts/*
 !scripts/.gitkeep
+pages/*
+!pages/.gitkeep

@@ -1,5 +1,6 @@
 import { FetchedTweet } from '../types';
 import { getTweets } from '../dom';
+import { settings } from '../settings';
 
 const filterWithSequentialNumbers = (item: FetchedTweet) => {
   const numbers = 4;
@@ -7,7 +8,12 @@ const filterWithSequentialNumbers = (item: FetchedTweet) => {
   return new RegExp(regex, 'i').test(item.userHandle);
 };
 
-const filterPubli = (item: FetchedTweet) => {
+const filterPubli = async (item: FetchedTweet) => {
+  const blockAds = await settings.getItem('blockAds', true);
+  if (!blockAds) {
+    return false;
+  }
+
   const links = Array.from(item.tweetElement.querySelectorAll('a'));
   const hasLinks = !!links.find((item) => {
     if (!/^De(.*?).com(.*?)/.test(item.innerText)) {
@@ -31,9 +37,9 @@ const filterPubli = (item: FetchedTweet) => {
 
 const FILTERS = [filterWithSequentialNumbers, filterPubli];
 
-const isInvalidHandle = (tweet: FetchedTweet) => {
+const isInvalidHandle = async (tweet: FetchedTweet) => {
   for(const filter of FILTERS) {
-    if (filter(tweet)) {
+    if (await filter(tweet)) {
       return true;
     }
   }
@@ -48,11 +54,11 @@ const hideTweet = (element: HTMLElement) => {
 };
 
 
-const processFeed = () => {
+const processFeed = async () => {
   const tweets = getTweets();
 
   for (const item of tweets) {
-    if (!isInvalidHandle(item)) {
+    if (!(await isInvalidHandle(item))) {
       continue;
     }
 

@@ -3,6 +3,10 @@
   "name": "X Accounts Filter",
   "description": "Filter and hide posts from unreal accounts on X (Twitter)",
   "version": "0.0.1",
+  "permissions": [
+    "storage"
+  ],
+  "options_page": "options.html",
   "content_scripts": [
     {
       "js": [
